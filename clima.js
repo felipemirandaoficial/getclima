@@ -51,7 +51,7 @@ function BuscarTemperatura(url) {
 // Função para buscar a temperatura da URL alternativa
 function downloadPaginaAlternativa(url) {
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'https://getclima.vercel.app/api/index.php?url=' + encodeURIComponent(url), true);
+    xhr.open('GET', 'https://api.simasul.com.br/info/baixar.php?url=' + encodeURIComponent(url), true);
     
     xhr.onload = function() {
         if (xhr.status === 200) {
