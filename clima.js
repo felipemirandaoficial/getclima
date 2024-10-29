@@ -1,10 +1,10 @@
-
+<script>
 document.addEventListener("DOMContentLoaded", function() {
     // Chama a função BuscarTemperatura e verifica o retorno
     var temperatura = BuscarTemperatura('https://www.wunderground.com/dashboard/pws/IAQUID2');
     if (!temperatura || temperatura === 0) {
         // Se não houver temperatura, tenta a URL alternativa
-        temperatura = BuscarTemperatura('https://www.wunderground.com/weather/SBCG');
+        downloadPaginaAlternativa('https://www.wunderground.com/weather/SBCG');
     }
 });
 
@@ -25,10 +25,6 @@ function BuscarTemperatura(url) {
                     temperaturaFahrenheit = buscarTexto(response, 'font-size:100%;margin:0;"> ', '° </div>');
                     temperaturaSensa = buscarTexto(response, 'Feels Like', 'span>&nbsp;');
                     temperaturaSensa = buscarTexto(temperaturaSensa, '"color:;">', '</');
-                } else if (url.includes('SBCG')) {
-                    // Extrair a temperatura da URL alternativa
-                    temperaturaFahrenheit = buscarTexto(response, 'class="wu-value wu-value-to"', '</span>');
-                    temperaturaSensa = buscarTexto(response, 'class="temp"', '°');
                 }
             }
         } else {
@@ -53,6 +49,46 @@ function BuscarTemperatura(url) {
     }
 }
 
+// Função para buscar a temperatura da URL alternativa
+function downloadPaginaAlternativa(url) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'https://getclima.vercel.app/api/index.php?url=' + encodeURIComponent(url), true);
+    
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            var response = xhr.responseText;
+
+            if (response) {
+                // Extrair a temperatura e a sensação térmica da URL alternativa
+                var temperaturaFahrenheit = buscarTexto(response, 'class="wu-value wu-value-to"', '</span>');
+                var temperaturaSensa = buscarTexto(response, 'class="temp"', '°');
+
+                if (temperaturaFahrenheit) {
+                    var temperaturaCelsius = (parseFloat(temperaturaFahrenheit) - 32) * 5 / 9;
+                    document.getElementById('temp_cur2').textContent = temperaturaCelsius.toFixed(0) + '°';
+                } else {
+                    document.getElementById('temp_cur2').textContent = 'Offline';
+                }
+
+                if (temperaturaSensa) {
+                    var temperaturaCelsiusSensa = (parseFloat(temperaturaSensa) - 32) * 5 / 9;
+                    // Exibir a temperatura média (opcional)
+                    var mediaTemperatura = (temperaturaCelsius + temperaturaCelsiusSensa) / 2;
+                    document.getElementById('temp_cur2').textContent = mediaTemperatura.toFixed(0) + '°';
+                }
+            }
+        } else {
+            console.log("Erro ao baixar a página alternativa.");
+        }
+    };
+
+    xhr.onerror = function() {
+        console.log("Erro na requisição para a URL alternativa.");
+    };
+
+    xhr.send();
+}
+
 // Função para buscar um trecho de texto entre duas strings
 function buscarTexto(texto, inicio, fim) {
     if (!texto) return null;
@@ -65,3 +101,4 @@ function buscarTexto(texto, inicio, fim) {
 
     return texto.substring(inicioIndex + inicio.length, fimIndex);
 }
+</script>
