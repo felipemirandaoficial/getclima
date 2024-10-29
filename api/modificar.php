@@ -67,16 +67,9 @@ function buscarTemperatura(url = 'https://www.wunderground.com/dashboard/pws/IAQ
 
                 if (!temperaturaSensa && url !== urlAlternativa) {
                     console.log("Não foi possível obter a temperatura, tentando a URL alternativa.");
-                    buscarTemperatura(urlAlternativa);
+                    downloadPaginaAlternativa(urlAlternativa);
                     return; // Para parar a execução desta função ao tentar a URL alternativa
                 }
-
-                // Se a URL atual for a alternativa, baixa a página alternativa usando PHP
-                if (url === urlAlternativa) {
-                    downloadPaginaAlternativa(urlAlternativa);
-                    return; // Para evitar que o código continue executando após a chamada do download
-                }
-
                 // Exibir as temperaturas ou mostrar "Offline"
                 if (temperaturaFahrenheit) {
                     var temperaturaCelsius = (parseFloat(temperaturaFahrenheit) - 32) * 5 / 9;
