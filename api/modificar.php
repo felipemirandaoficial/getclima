@@ -1,4 +1,6 @@
 <?php
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 // URL do arquivo clima.html
 $arquivoUrl = 'https://api.simasul.com.br/status/clima.html';
 $linkFileUrl = 'https://api.simasul.com.br/status/tipo.chuva.txt';
