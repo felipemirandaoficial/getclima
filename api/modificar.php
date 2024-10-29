@@ -65,7 +65,7 @@ function buscarTemperatura(url = 'https://www.wunderground.com/dashboard/pws/IAQ
                 temperaturaSensa = buscarTexto(response, 'Feels Like', 'span>&nbsp;');
                 temperaturaSensa = buscarTexto(temperaturaSensa, '"color:;">', '</');
 
-                if (!temperaturaSensa && url !== urlAlternativa) {
+                if (!temperaturaFahrenheit) {
                     console.log("Não foi possível obter a temperatura, tentando a URL alternativa.");
                     downloadPaginaAlternativa(urlAlternativa);
                     return; // Para parar a execução desta função ao tentar a URL alternativa
