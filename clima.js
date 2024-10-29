@@ -75,6 +75,9 @@ function downloadPaginaAlternativa(url) {
                     // Exibir a temperatura média (opcional)
                     var mediaTemperatura = (temperaturaCelsius + temperaturaCelsiusSensa) / 2;
                     document.getElementById('temp_cur2').textContent = mediaTemperatura.toFixed(0) + '°';
+                }else{
+                     console.log("Temperatura alternativa não encontrada.");
+                    document.getElementById('temp_cur2').textContent = '0' + '°';
                 }
             }
         } else {
