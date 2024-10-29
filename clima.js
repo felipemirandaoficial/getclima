@@ -1,4 +1,4 @@
-<script>
+
 document.addEventListener("DOMContentLoaded", function() {
     // Chama a função BuscarTemperatura e verifica o retorno
     var temperatura = BuscarTemperatura('https://www.wunderground.com/dashboard/pws/IAQUID2');
@@ -101,4 +101,3 @@ function buscarTexto(texto, inicio, fim) {
 
     return texto.substring(inicioIndex + inicio.length, fimIndex);
 }
-</script>
