@@ -1,8 +1,7 @@
-
 document.addEventListener("DOMContentLoaded", function() {
     // Chama a função BuscarTemperatura e verifica o retorno
     var temperatura = BuscarTemperatura('https://www.wunderground.com/dashboard/pws/IAQUID2');
-    if (!temperatura || temperatura === 0) {
+    if (temperatura === null || temperatura === undefined) {
         // Se não houver temperatura, tenta a URL alternativa
         downloadPaginaAlternativa('https://www.wunderground.com/weather/SBCG');
     }
@@ -18,7 +17,7 @@ function BuscarTemperatura(url) {
     xhr.onload = function() {
         if (xhr.status === 200) {
             var response = xhr.responseText;
-            
+
             if (response) {
                 if (url.includes('IAQUID2')) {
                     // Extrair a temperatura e a sensação térmica da primeira URL
@@ -45,7 +44,7 @@ function BuscarTemperatura(url) {
         return temperaturaCelsius;
     } else {
         console.log("Temperatura não encontrada.");
-        return 0;  // Retorna 0 caso a temperatura não tenha sido encontrada
+        return null;  // Retorna null caso a temperatura não tenha sido encontrada
     }
 }
 
