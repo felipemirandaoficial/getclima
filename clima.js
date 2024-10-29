@@ -44,6 +44,7 @@ function BuscarTemperatura(url) {
         return temperaturaCelsius;
     } else {
         console.log("Temperatura não encontrada.");
+        document.getElementById('temp_cur2').textContent = '666' + '°';
         return null;  // Retorna null caso a temperatura não tenha sido encontrada
     }
 }
